@@ -1,7 +1,7 @@
 # Getting Started
 ### Running App
 
-Create DB MySQL "go_rest_api_crud"
+Create and Run MySQL Database, DBNAME : "go_rest_api_crud"
 
 then:
 
