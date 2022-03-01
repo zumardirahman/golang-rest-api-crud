@@ -8,6 +8,8 @@ Official binary distributions are available at https://golang.org/dl/.
 After downloading a binary release, visit https://golang.org/doc/install
 for installation instructions.
 
+    go mod init rest-api-crud
+
 #### Install Gorilla Mux
 Gorilla `mux`: For creating routes adn HTTP handlers.
     
