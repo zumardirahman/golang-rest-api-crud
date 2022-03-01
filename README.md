@@ -1,6 +1,10 @@
 # Getting Started
+Running App
 
-## Step
+    go run main.go
+
+
+# Step Productions
 
 #### Install GoLang
 Official binary distributions are available at https://golang.org/dl/.
