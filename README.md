@@ -1,5 +1,9 @@
 # Getting Started
-Running App
+### Running App
+
+Create DB MySQL "go_rest_api_crud"
+
+then:
 
     go run main.go
 

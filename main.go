@@ -22,6 +22,7 @@ type Product struct {
 	ID    int             `json:"id"`
 	Code  string          `json:"code"`
 	Name  string          `json:"name"`
+	Desc  string          `json:"desc"`
 	Price decimal.Decimal `json:"price" sql:"type:decimal(16,2)"`
 }
 
