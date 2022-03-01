@@ -2,15 +2,11 @@
 
 ## Step
 
-### Create Database MySql "go_rest_api_crud"
-### Install GoLang
-### Install Paket
-#### Mux
-        Package `gorilla/mux` implements a request router and dispatcher for matching incoming requests to
-        their respective handler.
-                
-        ```sh
-        go get -u github.com/gorilla/mux
-        ```
+#### Create Database MySql "go_rest_api_crud"
+#### Install GoLang
+#### Install Go Mux
+    ```
+    go get -u github.com/gorilla/mux
+    ```
 
     
