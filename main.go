@@ -53,12 +53,15 @@ func handleRequest() {
 
 	myRouter.HandleFunc("/", homePage)
 	myRouter.HandleFunc("/api/products", createProduct).Methods("POST")
+	myRouter.HandleFunc("/api/products", getProducts).Methods("GET")
+	myRouter.HandleFunc("/api/products/{id}", getProduct).Methods("GET")
+	myRouter.HandleFunc("/api/products/{id}", updateProduct).Methods("PUT")
 
 	log.Fatal(http.ListenAndServe(":9999", myRouter))
 }
 
 func homePage(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "welcome!")
+	fmt.Fprintf(w, "welcome! this rest api with golang by Zumard Rahman")
 }
 
 func createProduct(w http.ResponseWriter, r *http.Request) {
@@ -69,9 +72,77 @@ func createProduct(w http.ResponseWriter, r *http.Request) {
 
 	db.Create(&product)
 
-	res := Result{Code: 200, Data: product, Message: "Succes Create Product"}
+	res := Result{Code: 200, Data: product, Message: "Success Create Product"}
 
 	result, _ := json.Marshal(res)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(result)
+}
+
+func getProducts(w http.ResponseWriter, r *http.Request) {
+	products := []Product{}
+
+	db.Find(&products)
+
+	res := Result{Code: 200, Data: products, Message: "Success Get Products"}
+
+	results, _ := json.Marshal(res)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(results)
+}
+
+func getProduct(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	productID := vars["id"]
+
+	var product Product
+	db.First(&product, productID)
+
+	res := Result{Code: 200, Data: product, Message: "Success Get Product by ID"}
+
+	results, _ := json.Marshal(res)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(results)
+}
+
+func updateProduct(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	productID := vars["id"]
+
+	payloads, _ := ioutil.ReadAll(r.Body)
+
+	var productUpdates Product
+	json.Unmarshal(payloads, &productUpdates)
+
+	var product Product
+	db.First(&product, productID)
+	db.Model(&product).Updates(productUpdates)
+
+	res := Result{Code: 200, Data: product, Message: "Success Update Product"}
+
+	result, _ := json.Marshal(res)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
