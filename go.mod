@@ -1,5 +1,6 @@
 module rest-api-crud
 
+// +heroku goVersion go1.17
 go 1.17
 
 require github.com/jinzhu/gorm v1.9.16

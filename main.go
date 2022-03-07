@@ -34,8 +34,9 @@ type Result struct {
 }
 
 func main() {
-	db, err = gorm.Open("mysql", "root:@/go_rest_api_crud?charset=utf8&parseTime=True")
-
+	// db, err = gorm.Open("mysql", "root:@/go_rest_api_crud?charset=utf8&parseTime=True")
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=require TimeZone=Asia/Jakarta", "ec2-18-210-191-5.compute-1.amazonaws.com", "ryakstqsspgfdb", "71ee3a20177f6677566dec3c4d3cf3d5599ca0dd9bdb65352931760c4391dfb3", "dafvj919t52c42", "5432")
+	db, err = gorm.Open("postgres", dsn)
 	if err != nil {
 		log.Println("Connection Failed", err)
 	} else {
