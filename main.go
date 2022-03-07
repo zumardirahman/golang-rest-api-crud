@@ -8,7 +8,8 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/jinzhu/gorm"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/shopspring/decimal"
@@ -36,7 +37,8 @@ type Result struct {
 func main() {
 	// db, err = gorm.Open("mysql", "root:@/go_rest_api_crud?charset=utf8&parseTime=True")
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=require TimeZone=Asia/Jakarta", "ec2-18-210-191-5.compute-1.amazonaws.com", "ryakstqsspgfdb", "71ee3a20177f6677566dec3c4d3cf3d5599ca0dd9bdb65352931760c4391dfb3", "dafvj919t52c42", "5432")
-	db, err = gorm.Open("postgres", dsn)
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
 	if err != nil {
 		log.Println("Connection Failed", err)
 	} else {
